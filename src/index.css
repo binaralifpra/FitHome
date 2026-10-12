@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Token warna semantik — semua komponen hanya memakai token ini,
+   jadi pergantian tema berlaku merata, bukan cuma background. */
+@theme {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-cta: var(--cta); /* tombol utama */
+  --color-on-cta: var(--on-cta);
+  --color-mark: var(--mark); /* badge, tag, nav aktif, streak */
+  --color-on-mark: var(--on-mark);
+  --color-nutri: var(--nutri); /* aksen nutrisi */
+  --color-on-nutri: var(--on-nutri);
+  --color-herb: var(--herb); /* makanan non-gorengan */
+  --color-tag: var(--tag); /* teks tag di atas foto */
+
+  --color-paper: #f7f4ec; /* teks/isian di atas foto */
+
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Sand — tema terang */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ede7da;
+  --panel: #f7f4ec;
+  --ink: #20241c;
+  --muted: #6b7260;
+  --line: #dcd5c4;
+  --cta: #c9633f;
+  --on-cta: #f7f4ec;
+  --mark: #3f4a34;
+  --on-mark: #f7f4ec;
+  --nutri: #c9633f;
+  --on-nutri: #f7f4ec;
+  --herb: #3f4a34;
+  --tag: #c9633f;
+}
+
+/* Charcoal — tema gelap.
+   Citrus (latihan), coral (nutrisi) & herba (non-gorengan) disetarakan kontrasnya
+   terhadap panel/latar (≈6:1) supaya tidak ada domain yang lebih "menonjol".
+   Halaman nutrisi memakai latar & panel gelap yang sama dengan halaman latihan. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #2a2823;
+  --panel: #332f28;
+  --ink: #f3eee1;
+  --muted: #b9b29e;
+  --line: #463f33;
+  --cta: #adb941;
+  --on-cta: #2a2823;
+  --mark: #adb941;
+  --on-mark: #2a2823;
+  --nutri: #ee9268;
+  --on-nutri: #2a2823;
+  --herb: #98b874; /* hijau herba, kontras ≈6:1 setara citrus & coral */
+  --tag: #2a2823;
+}
+
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+::selection { background: var(--cta); color: var(--on-cta); }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.animate-rise { animation: rise 0.45s ease-out both; }
+@keyframes pop { 0% { transform: scale(0.6); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.animate-pop { animation: pop 0.35s ease-out; }
+/* "GIF" pratinjau gerakan */
+@keyframes pulse-gif { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+.gif-a { animation: pulse-gif 1.8s ease-in-out infinite; }
+.gif-b { animation: pulse-gif 2.1s ease-in-out infinite; }
+/* foto hero saat "play" */
+@keyframes drift { from { transform: scale(1); } to { transform: scale(1.08) translateX(-1.5%); } }
+.playing { animation: drift 6s ease-in-out infinite alternate; }
